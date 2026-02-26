@@ -95,6 +95,7 @@ my_results <- results(object = dds2,
 # padj = p-valor ajustado
 
 
+
 ##Anotamos los genes para mostrar los símbolos para facilitar el estudio biológico
 genesID <- mygene::queryMany(my_results$row, scopes="ensembl.gene", fields="symbol", species="human")
 genesID <- genesID[!duplicated(genesID$query),]
@@ -118,7 +119,10 @@ genesID_threshold <- genesID_threshold[!duplicated(genesID_threshold$query),]
 my_results_threshold$row <- ifelse(is.na(genesID_threshold$symbol),genesID_threshold$query,genesID_threshold$symbol)
 
 ## Heatmap de los genes TOP DGE por p-valor ajustado
-mat <- assay(vsd)[head(order(my_results_threshold$padj), 30), ] 
+top_genes <- head(order(my_results_threshold$padj), 30)
+mat <- assay(vsd)[top_genes, ]
+rownames(mat) <- my_results_threshold$row[top_genes]
+
 pheatmap(mat)
 
 # Creamos el Volcano plot 
