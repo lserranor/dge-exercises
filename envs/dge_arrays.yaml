@@ -14,5 +14,5 @@ dependencies:
   - r-rcolorbrewer
   - bioconductor-enhancedvolcano
   - bioconductor-mygene
+  - bioconductor-vsn
   - r-base=4.0.3
- 
