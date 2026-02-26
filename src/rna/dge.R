@@ -3,6 +3,8 @@ library("DESeq2")
 library("pheatmap")
 library("RColorBrewer")
 library("EnhancedVolcano")
+library("vsn")
+
 
 ## Cargamos nuestro dataset de ejemplo
 data("airway")
@@ -43,7 +45,7 @@ sampleDists <- dist(t(assay(vsd)))
 
 sampleDistMatrix <- as.matrix(sampleDists)
 rownames(sampleDistMatrix) <- paste(vsd$cell, vsd$dex, sep="-")
-colnames(sampleDistMatrix) <- NULL
+colnames(sampleDistMatrix) <- paste(vsd$cell, vsd$dex, sep="-")
 colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
 pheatmap(sampleDistMatrix,
          clustering_distance_rows=sampleDists,
@@ -89,7 +91,7 @@ my_results <- results(object = dds2,
 
 
 ##Anotamos los genes para mostrar los símbolos para facilitar el estudio biológico
-genesID <-mygene::queryMany(my_results$row, scopes="ensembl.gene", fields="symbol", species="human")
+genesID <- mygene::queryMany(my_results$row, scopes="ensembl.gene", fields="symbol", species="human")
 genesID <- genesID[!duplicated(genesID$query),]
 my_results$row <- ifelse(is.na(genesID$symbol),genesID$ query,genesID$symbol)
 
@@ -127,4 +129,3 @@ subtitle = NULL,
 boxedLabels = TRUE,
 drawConnectors = TRUE,
 labSize = 6.0)
-
