@@ -60,8 +60,14 @@ dds2 <- DESeq(dds, test = "Wald")
 
 ## Vamos a verificar cómo ha quedado la estimación de la dispersión 
 plotDispEsts(dds2)
-meanSdPlot(assay(ntd))
+
+## Datos originales
+msd <- meanSdPlot(counts(dds2), plot = FALSE)
+msd$gg + ylim(0, 3000) ## Eliminamos los valores más altos sólo para la visualización
+
+## Tras VST
 meanSdPlot(assay(vsd))
+
 ## Exploremos cómo quedan los cambios de fold entre condiciones con respecto
 ## a las cuentas normalizadas
 plotMA(dds2)
@@ -129,3 +135,4 @@ subtitle = NULL,
 boxedLabels = TRUE,
 drawConnectors = TRUE,
 labSize = 6.0)
+
