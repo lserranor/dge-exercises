@@ -95,7 +95,6 @@ my_results <- results(object = dds2,
 # padj = p-valor ajustado
 
 
-
 ##Anotamos los genes para mostrar los símbolos para facilitar el estudio biológico
 genesID <- mygene::queryMany(my_results$row, scopes="ensembl.gene", fields="symbol", species="human")
 genesID <- genesID[!duplicated(genesID$query),]
@@ -125,14 +124,14 @@ pheatmap(mat)
 # Creamos el Volcano plot 
 
 EnhancedVolcano(my_results,
-lab = my_results$row,
-x = "log2FoldChange",
-y = "padj",
-title = "DEG treated vs untreated",
-FCcutoff = 1,
-pCutoff = 0.05,
-subtitle = NULL,
-boxedLabels = TRUE,
-drawConnectors = TRUE,
-labSize = 6.0)
+                lab = my_results$row,
+                x = "log2FoldChange",
+                y = "padj",
+                title = "DEG treated vs untreated",
+                FCcutoff = 1,
+                pCutoff = 0.05,
+                subtitle = NULL,
+                boxedLabels = TRUE,
+                drawConnectors = TRUE,
+                labSize = 6.0)
 
